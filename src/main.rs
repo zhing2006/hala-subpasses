@@ -147,6 +147,19 @@ impl HalaApplication for MyApplication {
       &gpu_req,
       window,
     )?;
+    renderer.create_gbuffer_images(
+      self.settings.use_transient,
+      if self.settings.use_small_gbuffer {
+        hala_gfx::HalaFormat::R8G8B8A8_UNORM
+      } else {
+        hala_gfx::HalaFormat::R32G32B32A32_SFLOAT
+      },
+      if self.settings.use_small_gbuffer {
+        hala_gfx::HalaFormat::A2R10G10B10_UNORM_PACK32
+      } else {
+        hala_gfx::HalaFormat::R32G32B32A32_SFLOAT
+      },
+    )?;
 
     let shaders_dir = if cfg!(debug_assertions) {
       "shaders/output/debug/hala-subpasses/HALA_SUBPASSES"
