@@ -1,0 +1,5 @@
+projects:
+  - name: hala-subpasses
+    global_macros:
+    optional_macro_combinations:
+      - - HALA_SUBPASSES
