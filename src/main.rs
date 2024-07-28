@@ -147,6 +147,13 @@ impl HalaApplication for MyApplication {
       &gpu_req,
       window,
     )?;
+
+    let shaders_dir = if cfg!(debug_assertions) {
+      "shaders/output/debug/hala-subpasses/HALA_SUBPASSES"
+    } else {
+      "shaders/output/release/hala-subpasses/HALA_SUBPASSES"
+    };
+
     renderer.create_gbuffer_images(
       self.settings.use_transient,
       if self.settings.use_small_gbuffer {
@@ -159,18 +166,15 @@ impl HalaApplication for MyApplication {
       } else {
         hala_gfx::HalaFormat::R32G32B32A32_SFLOAT
       },
+      &format!("{}/lighting.vs_6_8.spv", shaders_dir),
+      &format!("{}/lighting.ps_6_8.spv", shaders_dir),
     )?;
 
-    let shaders_dir = if cfg!(debug_assertions) {
-      "shaders/output/debug/hala-subpasses/HALA_SUBPASSES"
-    } else {
-      "shaders/output/release/hala-subpasses/HALA_SUBPASSES"
-    };
     renderer.push_shaders_with_file(
-      Some(&format!("{}/default.as_6_8.spv", shaders_dir)),
-      &format!("{}/default.ms_6_8.spv", shaders_dir),
-      &format!("{}/default.ps_6_8.spv", shaders_dir),
-      "default",
+      Some(&format!("{}/geometry.as_6_8.spv", shaders_dir)),
+      &format!("{}/geometry.ms_6_8.spv", shaders_dir),
+      &format!("{}/geometry.ps_6_8.spv", shaders_dir),
+      "geometry_pass",
     )?;
 
     renderer.set_scene(&mut scene)?;

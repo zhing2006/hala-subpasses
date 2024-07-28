@@ -1,7 +1,7 @@
 #define USE_MESH_SHADER
 
 #include "scene.hlsl"
-#include "common.hlsl"
+#include "geometry.hlsl"
 
 // We don't use pay loads in this sample, but the fn call requires one.
 groupshared MeshShaderPayLoad ms_payload;

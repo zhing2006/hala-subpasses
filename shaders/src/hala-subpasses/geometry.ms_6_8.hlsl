@@ -1,7 +1,7 @@
 #define USE_MESH_SHADER
 
 #include "scene.hlsl"
-#include "common.hlsl"
+#include "geometry.hlsl"
 
 #define MAX_VERTEX_COUNT 64
 #define MAX_TRIANGLE_COUNT 124

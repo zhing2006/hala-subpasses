@@ -1,5 +1,5 @@
 #include "scene.hlsl"
-#include "common.hlsl"
+#include "geometry.hlsl"
 
 struct FragmentOutput {
   [[vk::location(0)]] float4 albedo: SV_Target0;
