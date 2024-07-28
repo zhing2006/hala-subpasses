@@ -170,7 +170,7 @@ impl HalaApplication for MyApplication {
       Some(&format!("{}/default.as_6_8.spv", shaders_dir)),
       &format!("{}/default.ms_6_8.spv", shaders_dir),
       &format!("{}/default.ps_6_8.spv", shaders_dir),
-      "test",
+      "default",
     )?;
 
     renderer.set_scene(&mut scene)?;
