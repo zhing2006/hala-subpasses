@@ -169,6 +169,7 @@ impl HalaApplication for MyApplication {
       &format!("{}/lighting.vs_6_8.spv", shaders_dir),
       &format!("{}/lighting.ps_6_8.spv", shaders_dir),
     )?;
+    renderer.create_deferred_render_pass()?;
 
     renderer.push_shaders_with_file(
       Some(&format!("{}/geometry.as_6_8.spv", shaders_dir)),
