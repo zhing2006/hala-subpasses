@@ -19,6 +19,7 @@ cbuffer GlobalUniformBuffer {
   float4x4 v_mtx;       // The view matrix
   float4x4 p_mtx;       // The projection matrix
   float4x4 vp_mtx;      // The view-projection matrix
+  float4x4 i_vp_mtx;    // The inverse view-projection matrix
 };
 
 [[vk::binding(1, 0)]]
