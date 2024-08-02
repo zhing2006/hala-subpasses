@@ -25,16 +25,6 @@ struct MySettings {
   pub use_small_gbuffer: bool,
 }
 
-impl Default for MySettings {
-  fn default() -> Self {
-    Self {
-      use_subpasses: true,
-      use_transient: true,
-      use_small_gbuffer: true,
-    }
-  }
-}
-
 /// The application.
 struct MyApplication {
   log_file: String,
@@ -71,10 +61,15 @@ impl MyApplication {
     std::fs::create_dir_all("./out")
       .with_context(|| "Failed to create the output directory: ./out")?;
 
+    let settings = MySettings {
+      use_subpasses: config.use_subpasses,
+      use_transient: config.use_transient,
+      use_small_gbuffer: config.use_small_gbuffer,
+    };
     Ok(Self {
       log_file: log_file.to_string(),
       config,
-      settings: MySettings::default(),
+      settings,
       renderer: None,
       imgui: None,
     })
@@ -218,9 +213,12 @@ impl HalaApplication for MyApplication {
               .position([10.0, 10.0], imgui::Condition::FirstUseEver)
               .always_auto_resize(true)
               .build(|| {
-                let _ = ui.checkbox("Use Subpasses", &mut self.settings.use_subpasses);
-                let _ = ui.checkbox("Use Transient", &mut self.settings.use_transient);
-                let _ = ui.checkbox("Use Small(128-bits) G-Buffer", &mut self.settings.use_small_gbuffer);
+                ui.disabled(true, || {
+                  ui.text("Renderer Configure:");
+                  let _ = ui.checkbox("Use Subpasses", &mut self.settings.use_subpasses);
+                  let _ = ui.checkbox("Use Transient", &mut self.settings.use_transient);
+                  let _ = ui.checkbox("Use Small(128-bits) G-Buffer", &mut self.settings.use_small_gbuffer);
+                });
               }
             );
           }

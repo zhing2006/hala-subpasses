@@ -10,6 +10,9 @@ pub use window::*;
 pub struct AppConfig {
   pub window: WindowConfig,
   pub scene_file: String,
+  pub use_subpasses: bool,
+  pub use_transient: bool,
+  pub use_small_gbuffer: bool,
 }
 
 /// Validate the application configure.

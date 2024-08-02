@@ -2,3 +2,6 @@ window:
   width: 1280
   height: 720
 scene_file: assets/rgb.gltf
+use_subpasses: true
+use_transient: true
+use_small_gbuffer: true
