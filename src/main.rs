@@ -13,7 +13,7 @@ use hala_imgui::{
 use hala_renderer::{
   scene,
   renderer::HalaRendererTrait,
-  drz_renderer::HalaRenderer,
+  rz_renderer::HalaRenderer,
 };
 
 mod config;
