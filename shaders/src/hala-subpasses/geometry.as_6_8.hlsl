@@ -8,6 +8,7 @@ groupshared MeshShaderPayLoad ms_payload;
 
 [numthreads(TASK_SHADER_GROUP_SIZE, 1, 1)]
 void main(
+  [[vk::builtin("DrawIndex")]] uint gl_DrawID : SV_DrawID,
   uint3 group_id : SV_GroupID,
   uint3 group_thread_id : SV_GroupThreadID,
   uint3 dispatch_thread_id : SV_DispatchThreadID
@@ -25,7 +26,10 @@ void main(
 
   bool is_visible = true;
 
-  // printf("[TASK SHADER] dispatch_thread_id: %d\n", dispatch_thread_id.x);
+  if (meshlet_index == 0) {
+    // printf("[TASK SHADER] dispatch_thread_id: %d\n", dispatch_thread_id.x);
+    // printf("[TASK SHADER] Draw ID: %d\n", gl_DrawID);
+  }
 
   const float3 cone_apex = mul(per_object_data.m_mtx, float4(meshlet.cone_apex, 1.0)).xyz;
   const float3 cone_axis = normalize(mul(float4(meshlet.cone_axis, 0.0), per_object_data.i_m_mtx).xyz);
