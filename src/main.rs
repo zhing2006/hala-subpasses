@@ -77,7 +77,6 @@ impl MyApplication {
 
 }
 
-
 /// The implementation of the application trait for the SDF renderer application.
 impl HalaApplication for MyApplication {
 
@@ -222,6 +221,8 @@ impl HalaApplication for MyApplication {
               }
             );
           }
+
+          Ok(())
         }
       )?;
       imgui.end_frame()?;
