@@ -6,6 +6,7 @@ use anyhow::{
 use clap::{arg, Command};
 
 use hala_imgui::{
+  HalaApplicationContextTrait,
   HalaApplication,
   HalaImGui,
 };
@@ -25,8 +26,8 @@ struct MySettings {
   pub use_small_gbuffer: bool,
 }
 
-/// The application.
-struct MyApplication {
+/// The application context.
+struct MyApplicationContext {
   log_file: String,
   config: config::AppConfig,
   settings: MySettings,
@@ -34,14 +35,14 @@ struct MyApplication {
   imgui: Option<HalaImGui>,
 }
 
-impl Drop for MyApplication {
+impl Drop for MyApplicationContext {
   fn drop(&mut self) {
     self.imgui = None;
   }
 }
 
-/// The implementation of the SDF renderer application.
-impl MyApplication {
+/// The implementation of my application context.
+impl MyApplicationContext {
 
   pub fn new() -> Result<Self> {
     // Parse the command line arguments.
@@ -77,8 +78,8 @@ impl MyApplication {
 
 }
 
-/// The implementation of the application trait for the SDF renderer application.
-impl HalaApplication for MyApplication {
+/// The implementation of the application context trait for my application context.
+impl HalaApplicationContextTrait for MyApplicationContext {
 
   fn get_log_console_fmt(&self) -> &str {
     "{d(%H:%M:%S)} {h({l:<5})} {t:<20.20} - {m}{n}"
@@ -271,10 +272,11 @@ fn cli() -> Command {
 /// The normal main function.
 fn main() -> Result<()> {
   // Initialize the application.
-  let mut app = MyApplication::new()?;
-  app.init()?;
+  let context = MyApplicationContext::new()?;
+  context.init()?;
 
   // Run the application.
+  let mut app = HalaApplication::new(Box::new(context));
   app.run()?;
 
   Ok(())
